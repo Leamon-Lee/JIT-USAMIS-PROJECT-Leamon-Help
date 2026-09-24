@@ -1,0 +1,6 @@
+# Copy this file to db.properties and replace the local values.
+db.url=jdbc:postgresql://localhost:5432/usamis
+db.user=usamis_user
+db.password=replace_with_a_local_password
+db.pool.max=10
+db.pool.min=2

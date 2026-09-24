@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                             https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+  <display-name>USAMIS — University Student Academic MIS</display-name>
+  <description>Jinling Institute of Technology — Academic Management System</description>
+
+  <!-- ── SESSION CONFIGURATION ── -->
+  <session-config>
+    <!-- 60-minute timeout -->
+    <session-timeout>60</session-timeout>
+    <cookie-config>
+      <!-- HttpOnly: JS cannot read session cookie — XSS protection -->
+      <http-only>true</http-only>
+      <!-- Secure: only sent over HTTPS in production -->
+      <secure>false</secure><!-- Set true in production behind HTTPS -->
+      <same-site>Strict</same-site>
+      <name>USAMIS_SESSION</name>
+    </cookie-config>
+    <tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+
+  <!-- ── WELCOME FILE ── -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <!-- ── ERROR PAGES ── -->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error.html</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error.html</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/error.html</location>
+  </error-page>
+
+  <!-- ── SECURITY HEADERS (via filter or Tomcat config) ── -->
+  <!-- In production, configure Tomcat's HttpHeaderSecurityFilter:
+       X-Content-Type-Options: nosniff
+       X-Frame-Options: DENY
+       Content-Security-Policy: default-src 'self'
+       Strict-Transport-Security: max-age=31536000
+  -->
+
+  <!-- ── MIME TYPES ── -->
+  <mime-mapping>
+    <extension>json</extension>
+    <mime-type>application/json</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>woff2</extension>
+    <mime-type>font/woff2</mime-type>
+  </mime-mapping>
+
+</web-app>

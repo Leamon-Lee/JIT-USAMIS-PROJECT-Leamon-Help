@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USAMIS — Jinling Institute of Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS — JIT Theme
+   Navy #1a2a4a  Gold #c8a96e  Teal #2e7d8a
+═══════════════════════════════════════════════ */
+:root {
+  --navy:       #1a2a4a;
+  --navy-deep:  #111d33;
+  --navy-mid:   #243356;
+  --navy-light: #2d4070;
+  --gold:       #c8a96e;
+  --gold-light: #e0c898;
+  --gold-dark:  #a88a4e;
+  --teal:       #2e7d8a;
+  --teal-light: #3d9aaa;
+  --white:      #ffffff;
+  --off-white:  #f4f6f9;
+  --gray-100:   #edf0f4;
+  --gray-200:   #d8dde6;
+  --gray-400:   #94a3b8;
+  --gray-600:   #64748b;
+  --gray-800:   #334155;
+  --success:    #22c55e;
+  --danger:     #ef4444;
+  --warning:    #f59e0b;
+  --info:       #3b82f6;
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.12);
+  --shadow-md:  0 4px 16px rgba(26,42,74,.15);
+  --shadow-lg:  0 8px 32px rgba(26,42,74,.2);
+  --radius:     8px;
+  --radius-lg:  14px;
+  --transition: 0.2s ease;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body { font-family: 'Inter', sans-serif; background: var(--off-white); color: var(--gray-800); min-height: 100vh; }
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 3px; }
+
+/* ══════════════════════════════════════════════
+   LOGIN PAGE
+══════════════════════════════════════════════ */
+#loginPage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 50%, var(--navy-mid) 100%);
+  position: relative;
+  overflow: hidden;
+}
+#loginPage::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 80%, rgba(200,169,110,.08) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 10%, rgba(46,125,138,.1) 0%, transparent 70%);
+}
+.login-header {
+  padding: 1.5rem 2.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  border-bottom: 1px solid rgba(200,169,110,.2);
+  position: relative; z-index: 2;
+}
+.login-header .logo-mark {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 700; color: var(--navy-deep);
+  font-family: 'Playfair Display', serif;
+  box-shadow: 0 0 20px rgba(200,169,110,.4);
+}
+.login-header .school-name { color: var(--white); }
+.login-header .school-name h1 { font-size: 1rem; font-weight: 600; letter-spacing: .02em; }
+.login-header .school-name p { font-size: .75rem; color: var(--gold-light); font-weight: 300; }
+
+.login-body {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 3rem 1rem;
+  position: relative; z-index: 2;
+}
+.login-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(200,169,110,.2);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  width: 100%; max-width: 420px;
+  box-shadow: var(--shadow-lg);
+}
+.login-card .system-badge {
+  display: inline-block;
+  background: rgba(200,169,110,.15);
+  border: 1px solid rgba(200,169,110,.3);
+  color: var(--gold-light);
+  font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+  padding: .25rem .75rem; border-radius: 20px;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+}
+.login-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem; color: var(--white);
+  margin-bottom: .4rem;
+}
+.login-card .subtitle { color: var(--gray-400); font-size: .85rem; margin-bottom: 2rem; }
+
+.form-group { margin-bottom: 1.1rem; }
+.form-group label { display: block; font-size: .8rem; color: var(--gray-400); margin-bottom: .4rem; font-weight: 500; letter-spacing: .02em; }
+.form-control {
+  width: 100%; padding: .7rem 1rem;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius);
+  color: var(--white); font-size: .9rem; font-family: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+.form-control::placeholder { color: rgba(255,255,255,.3); }
+.form-control:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,169,110,.15);
+}
+.form-control option { background: var(--navy-deep); color: var(--white); }
+
+.btn-login {
+  width: 100%; padding: .85rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border: none; border-radius: var(--radius);
+  color: var(--navy-deep); font-weight: 700; font-size: .95rem;
+  cursor: pointer; font-family: inherit;
+  transition: transform var(--transition), box-shadow var(--transition);
+  margin-top: .5rem;
+  letter-spacing: .02em;
+}
+.btn-login:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(200,169,110,.4);
+}
+.demo-accounts {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.demo-accounts p { font-size: .75rem; color: var(--gray-400); margin-bottom: .6rem; }
+.demo-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.demo-chip {
+  padding: .25rem .6rem;
+  border: 1px solid rgba(200,169,110,.25);
+  border-radius: 20px;
+  font-size: .7rem; color: var(--gold-light);
+  cursor: pointer; transition: background var(--transition);
+  background: rgba(200,169,110,.05);
+}
+.demo-chip:hover { background: rgba(200,169,110,.15); }
+
+.login-footer {
+  text-align: center; padding: 1.25rem;
+  color: rgba(255,255,255,.3); font-size: .75rem;
+  position: relative; z-index: 2;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+/* ══════════════════════════════════════════════
+   APP LAYOUT
+══════════════════════════════════════════════ */
+#app {
+  display: none;
+  min-height: 100vh;
+  flex-direction: row;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 240px; min-height: 100vh;
+  background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 100%);
+  display: flex; flex-direction: column;
+  position: fixed; left: 0; top: 0; bottom: 0;
+  z-index: 100; overflow-y: auto;
+  border-right: 1px solid rgba(200,169,110,.1);
+}
+.sidebar-brand {
+  padding: 1.4rem 1.25rem;
+  border-bottom: 1px solid rgba(200,169,110,.1);
+  display: flex; align-items: center; gap: .85rem;
+}
+.sidebar-brand .logo {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700; font-size: 1rem; color: var(--navy-deep);
+  flex-shrink: 0;
+}
+.sidebar-brand .brand-text { min-width: 0; }
+.sidebar-brand .brand-text h2 { font-size: .85rem; font-weight: 700; color: var(--white); line-height: 1.2; }
+.sidebar-brand .brand-text p { font-size: .65rem; color: var(--gold-light); font-weight: 300; }
+
+.sidebar-user {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.sidebar-user .user-avatar {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-light));
+  border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  font-size: .8rem; font-weight: 600; color: var(--white); margin-bottom: .5rem;
+}
+.sidebar-user .user-name { font-size: .8rem; color: var(--white); font-weight: 600; }
+.sidebar-user .user-role {
+  font-size: .68rem; color: var(--gold-light);
+  background: rgba(200,169,110,.1);
+  border: 1px solid rgba(200,169,110,.2);
+  display: inline-block; padding: .1rem .5rem; border-radius: 10px;
+  margin-top: .2rem;
+}
+
+.sidebar-nav { flex: 1; padding: .75rem 0; }
+.nav-section { margin-bottom: .25rem; }
+.nav-section-label {
+  font-size: .62rem; font-weight: 700; letter-spacing: .1em;
+  color: rgba(255,255,255,.25); text-transform: uppercase;
+  padding: .6rem 1.25rem .3rem;
+}
+.nav-item {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .6rem 1.25rem;
+  color: rgba(255,255,255,.55); font-size: .82rem; font-weight: 500;
+  cursor: pointer; border-radius: 0;
+  transition: all var(--transition);
+  position: relative; border-left: 3px solid transparent;
+  text-decoration: none;
+}
+.nav-item:hover { color: var(--white); background: rgba(255,255,255,.05); }
+.nav-item.active {
+  color: var(--gold-light);
+  background: rgba(200,169,110,.1);
+  border-left-color: var(--gold);
+}
+.nav-item .nav-icon { width: 16px; text-align: center; font-size: .9rem; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto; font-size: .65rem; font-weight: 700;
+  background: var(--danger); color: var(--white);
+  padding: .1rem .45rem; border-radius: 10px;
+}
+
+.sidebar-footer {
+  padding: .75rem 1.25rem 1.25rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.btn-logout {
+  width: 100%; padding: .55rem;
+  background: rgba(239,68,68,.1);
+  border: 1px solid rgba(239,68,68,.25);
+  border-radius: var(--radius);
+  color: #fca5a5; font-size: .8rem; font-weight: 500;
+  cursor: pointer; font-family: inherit;
+  transition: background var(--transition);
+}
+.btn-logout:hover { background: rgba(239,68,68,.2); }
+
+/* ── MAIN CONTENT ── */
+.main-content {
+  margin-left: 240px;
+  flex: 1;
+  display: flex; flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--white);
+  padding: .9rem 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--gray-200);
+  position: sticky; top: 0; z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+.topbar .page-title {
+  font-size: 1.1rem; font-weight: 700; color: var(--navy);
+  display: flex; align-items: center; gap: .6rem;
+}
+.topbar .page-title .page-icon { font-size: 1.1rem; }
+.topbar-right { display: flex; align-items: center; gap: 1rem; }
+.topbar-date { font-size: .78rem; color: var(--gray-400); }
+.topbar-notifications {
+  position: relative; cursor: pointer;
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; background: var(--gray-100);
+  transition: background var(--transition);
+}
+.topbar-notifications:hover { background: var(--gray-200); }
+.notif-dot {
+  position: absolute; top: 6px; right: 6px;
+  width: 8px; height: 8px; background: var(--danger);
+  border-radius: 50%; border: 2px solid var(--white);
+}
+
+/* ── PAGE CONTENT ── */
+.page-content { padding: 1.75rem 2rem; flex: 1; }
+.page-section { display: none; }
+.page-section.active { display: block; }
+
+/* ══════════════════════════════════════════════
+   COMPONENTS
+══════════════════════════════════════════════ */
+
+/* Stats Grid */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.75rem; }
+.stat-card {
+  background: var(--white); border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  display: flex; align-items: center; gap: 1rem;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.stat-icon {
+  width: 52px; height: 52px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+}
+.stat-icon.navy { background: rgba(26,42,74,.1); }
+.stat-icon.gold { background: rgba(200,169,110,.15); }
+.stat-icon.teal { background: rgba(46,125,138,.12); }
+.stat-icon.green { background: rgba(34,197,94,.12); }
+.stat-icon.red   { background: rgba(239,68,68,.1); }
+.stat-info { min-width: 0; }
+.stat-value { font-size: 1.65rem; font-weight: 700; color: var(--navy); line-height: 1; }
+.stat-label { font-size: .75rem; color: var(--gray-600); margin-top: .2rem; }
+.stat-change { font-size: .72rem; margin-top: .3rem; font-weight: 500; }
+.stat-change.up { color: var(--success); }
+.stat-change.down { color: var(--danger); }
+
+/* Cards */
+.card {
+  background: var(--white); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+  overflow: hidden; margin-bottom: 1.25rem;
+}
+.card-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title { font-size: .9rem; font-weight: 700; color: var(--navy); }
+.card-body { padding: 1.5rem; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+thead th {
+  background: var(--navy); color: var(--white);
+  padding: .7rem 1rem; text-align: left;
+  font-weight: 600; font-size: .78rem; letter-spacing: .03em;
+  white-space: nowrap;
+}
+thead th:first-child { border-radius: 0; }
+thead th:last-child { border-radius: 0; }
+tbody tr { border-bottom: 1px solid var(--gray-100); transition: background var(--transition); }
+tbody tr:hover { background: var(--gray-100); }
+tbody td { padding: .7rem 1rem; color: var(--gray-800); vertical-align: middle; }
+
+/* Badges */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: .2rem .6rem; border-radius: 20px;
+  font-size: .7rem; font-weight: 600; white-space: nowrap;
+}
+.badge-success { background: rgba(34,197,94,.1); color: #16a34a; border: 1px solid rgba(34,197,94,.2); }
+.badge-danger  { background: rgba(239,68,68,.1); color: #dc2626; border: 1px solid rgba(239,68,68,.2); }
+.badge-warning { background: rgba(245,158,11,.1); color: #d97706; border: 1px solid rgba(245,158,11,.2); }
+.badge-info    { background: rgba(59,130,246,.1); color: #2563eb; border: 1px solid rgba(59,130,246,.2); }
+.badge-navy    { background: rgba(26,42,74,.08); color: var(--navy); border: 1px solid rgba(26,42,74,.15); }
+.badge-gold    { background: rgba(200,169,110,.12); color: var(--gold-dark); border: 1px solid rgba(200,169,110,.25); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .5rem 1rem; border-radius: var(--radius);
+  font-size: .8rem; font-weight: 600; cursor: pointer;
+  font-family: inherit; border: none;
+  transition: all var(--transition); text-decoration: none;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--navy); color: var(--white);
+}
+.btn-primary:hover { background: var(--navy-mid); box-shadow: var(--shadow-sm); }
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--navy-deep);
+}
+.btn-gold:hover { box-shadow: 0 4px 12px rgba(200,169,110,.4); }
+.btn-success { background: rgba(34,197,94,.1); color: #16a34a; border: 1px solid rgba(34,197,94,.2); }
+.btn-danger  { background: rgba(239,68,68,.1); color: #dc2626; border: 1px solid rgba(239,68,68,.2); }
+.btn-outline {
+  background: transparent; color: var(--navy);
+  border: 1px solid var(--gray-200);
+}
+.btn-outline:hover { background: var(--gray-100); }
+.btn-sm { padding: .3rem .7rem; font-size: .74rem; }
+
+/* Action Bar */
+.action-bar {
+  display: flex; align-items: center; gap: .75rem;
+  margin-bottom: 1rem; flex-wrap: wrap;
+}
+.search-input {
+  flex: 1; min-width: 200px; max-width: 320px;
+  padding: .55rem 1rem;
+  border: 1px solid var(--gray-200); border-radius: var(--radius);
+  font-size: .83rem; font-family: inherit; color: var(--gray-800);
+  outline: none; transition: border-color var(--transition);
+}
+.search-input:focus { border-color: var(--navy); }
+
+/* Progress bars */
+.progress { height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+.progress-bar { height: 100%; border-radius: 3px; transition: width .5s ease; }
+.progress-bar.navy { background: var(--navy); }
+.progress-bar.gold  { background: var(--gold); }
+.progress-bar.teal  { background: var(--teal); }
+.progress-bar.green { background: var(--success); }
+
+/* 2-col layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,16,30,.6); z-index: 500;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white); border-radius: var(--radius-lg);
+  width: 100%; max-width: 520px; max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn .2s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(10px); } to { opacity: 1; transform: none; } }
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.modal-title { font-size: .95rem; font-weight: 700; color: var(--navy); }
+.modal-close {
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--gray-100); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem; color: var(--gray-600);
+  transition: background var(--transition);
+}
+.modal-close:hover { background: var(--gray-200); }
+.modal-body { padding: 1.5rem; }
+.modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--gray-200); display: flex; gap: .75rem; justify-content: flex-end; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group-app { margin-bottom: 1rem; }
+.form-group-app label { display: block; font-size: .78rem; font-weight: 600; color: var(--gray-800); margin-bottom: .35rem; }
+.form-control-app {
+  width: 100%; padding: .6rem .9rem;
+  border: 1px solid var(--gray-200); border-radius: var(--radius);
+  font-size: .84rem; font-family: inherit; color: var(--gray-800);
+  outline: none; transition: border-color var(--transition);
+}
+.form-control-app:focus { border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,42,74,.08); }
+.form-control-app option { color: var(--gray-800); }
+
+/* ── CHARTS ── */
+.chart-container { position: relative; }
+.bar-chart { display: flex; align-items: flex-end; gap: .5rem; height: 140px; padding: .5rem 0 0; }
+.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: .3rem; }
+.bar {
+  width: 100%; border-radius: 4px 4px 0 0;
+  transition: height .5s ease;
+}
+.bar-label { font-size: .65rem; color: var(--gray-600); text-align: center; white-space: nowrap; }
+.bar-val { font-size: .7rem; font-weight: 700; color: var(--navy); }
+
+/* Donut */
+.donut-wrap { display: flex; align-items: center; gap: 1.5rem; }
+.donut-legend { flex: 1; }
+.legend-item { display: flex; align-items: center; gap: .5rem; margin-bottom: .5rem; font-size: .78rem; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* RBAC Permission Table */
+.perm-table { font-size: .78rem; }
+.perm-table th, .perm-table td { padding: .5rem .75rem; text-align: center; border: 1px solid var(--gray-200); }
+.perm-table th { background: var(--navy); color: var(--white); }
+.perm-table td:first-child { text-align: left; font-weight: 600; background: var(--gray-100); color: var(--navy); }
+.perm-yes { color: var(--success); font-size: 1rem; }
+.perm-no  { color: var(--danger); font-size: 1rem; }
+.perm-partial { font-size: .7rem; color: var(--warning); font-weight: 600; }
+
+/* Audit log */
+.audit-row { display: flex; gap: .75rem; padding: .6rem 0; border-bottom: 1px solid var(--gray-100); align-items: flex-start; }
+.audit-row:last-child { border-bottom: none; }
+.audit-time { font-size: .7rem; color: var(--gray-400); white-space: nowrap; min-width: 80px; }
+.audit-action { font-size: .8rem; font-weight: 600; color: var(--navy); }
+.audit-detail { font-size: .75rem; color: var(--gray-600); }
+.audit-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+
+/* GPA indicator */
+.gpa-bar-wrap { margin-bottom: .75rem; }
+.gpa-header { display: flex; justify-content: space-between; font-size: .78rem; margin-bottom: .3rem; }
+.gpa-name { color: var(--navy); font-weight: 600; }
+.gpa-val { color: var(--gray-600); }
+
+/* Toast */
+.toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999; display: flex; flex-direction: column; gap: .5rem; }
+.toast {
+  background: var(--navy); color: var(--white);
+  padding: .75rem 1.25rem; border-radius: var(--radius);
+  font-size: .82rem; box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: .6rem;
+  animation: toastIn .25s ease, toastOut .25s ease 2.75s forwards;
+  border-left: 3px solid var(--gold);
+}
+.toast.success { border-left-color: var(--success); }
+.toast.error   { border-left-color: var(--danger); }
+@keyframes toastIn  { from { opacity: 0; transform: translateX(20px); } }
+@keyframes toastOut { to   { opacity: 0; transform: translateX(20px); } }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--gray-400); }
+.empty-state .empty-icon { font-size: 2.5rem; margin-bottom: .75rem; opacity: .5; }
+.empty-state p { font-size: .85rem; }
+
+/* Alert */
+.alert { padding: .75rem 1rem; border-radius: var(--radius); font-size: .82rem; margin-bottom: 1rem; }
+.alert-info    { background: rgba(59,130,246,.08); border: 1px solid rgba(59,130,246,.2); color: #1d4ed8; }
+.alert-success { background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2); color: #15803d; }
+.alert-warning { background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.2); color: #92400e; }
+.alert-danger  { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2); color: #b91c1c; }
+
+/* At-risk list */
+.risk-item { display: flex; align-items: center; gap: .75rem; padding: .6rem 0; border-bottom: 1px solid var(--gray-100); }
+.risk-item:last-child { border-bottom: none; }
+.risk-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--teal));
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem; font-weight: 700; color: var(--white); flex-shrink: 0;
+}
+.risk-name { font-size: .82rem; font-weight: 600; color: var(--navy); }
+.risk-detail { font-size: .73rem; color: var(--gray-600); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .main-content { margin-left: 0; }
+  .two-col, .three-col { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Print */
+@media print {
+  .sidebar, .topbar, .action-bar { display: none !important; }
+  .main-content { margin-left: 0; }
+  .card { box-shadow: none; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     LOGIN PAGE
+════════════════════════════════════════════ -->
+<div id="loginPage">
+  <div class="login-header">
+    <div class="logo-mark">J</div>
+    <div class="school-name">
+      <h1>Jinling Institute of Technology</h1>
+      <p>金陵科技学院 · Nanjing, China</p>
+    </div>
+  </div>
+
+  <div class="login-body">
+    <div class="login-card">
+      <div class="system-badge">🎓 Academic MIS</div>
+      <h2>Welcome to USAMIS</h2>
+      <p class="subtitle">University Student Academic Management Information System</p>
+
+      <div class="form-group">
+        <label>User ID / Username</label>
+        <input class="form-control" id="loginUser" type="text" placeholder="Enter your ID" value="admin001">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" id="loginPass" type="password" placeholder="Enter password" value="admin123">
+      </div>
+      <div class="form-group">
+        <label>Sign in as</label>
+        <select class="form-control" id="loginRole">
+          <option value="admin">Administrator</option>
+          <option value="registrar">Registrar</option>
+          <option value="lecturer">Lecturer</option>
+          <option value="finance">Finance Officer</option>
+          <option value="student">Student</option>
+        </select>
+      </div>
+      <button class="btn-login" onclick="doLogin()">Sign In →</button>
+
+      <div class="demo-accounts">
+        <p>Quick demo — click to prefill:</p>
+        <div class="demo-chips">
+          <span class="demo-chip" onclick="setDemo('admin','admin001','admin123')">👤 Admin</span>
+          <span class="demo-chip" onclick="setDemo('registrar','reg001','reg123')">📋 Registrar</span>
+          <span class="demo-chip" onclick="setDemo('lecturer','lec001','lec123')">👩‍🏫 Lecturer</span>
+          <span class="demo-chip" onclick="setDemo('finance','fin001','fin123')">💰 Finance</span>
+          <span class="demo-chip" onclick="setDemo('student','stu001','stu123')">🎓 Student</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="login-footer">
+    © 2024 Jinling Institute of Technology · USAMIS v1.0 · Management Information Systems
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     MAIN APP
+════════════════════════════════════════════ -->
+<div id="app" style="display:none;flex-direction:row;">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="logo">J</div>
+      <div class="brand-text">
+        <h2>USAMIS</h2>
+        <p>JIT Academic MIS</p>
+      </div>
+    </div>
+    <div class="sidebar-user" id="sidebarUser"></div>
+    <div class="sidebar-nav" id="sidebarNav"></div>
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="doLogout()">⬅ Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="topbar">
+      <div class="page-title" id="pageTitle">
+        <span class="page-icon">🏠</span>
+        <span>Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-date" id="topbarDate"></span>
+        <div class="topbar-notifications" title="Notifications">
+          🔔 <div class="notif-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="page-section active" id="sec-dashboard">
+        <div class="stats-grid" id="dashStats"></div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📊 Student Distribution by Department</span>
+            </div>
+            <div class="card-body">
+              <div class="bar-chart" id="deptChart"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">💰 Fee Collection Status</span></div>
+            <div class="card-body">
+              <div class="donut-wrap">
+                <svg viewBox="0 0 120 120" width="110" height="110">
+                  <circle cx="60" cy="60" r="48" fill="none" stroke="#edf0f4" stroke-width="14"/>
+                  <circle cx="60" cy="60" r="48" fill="none" stroke="#c8a96e" stroke-width="14"
+                    stroke-dasharray="188 113" stroke-dashoffset="-30" stroke-linecap="round"/>
+                  <circle cx="60" cy="60" r="48" fill="none" stroke="#1a2a4a" stroke-width="14"
+                    stroke-dasharray="75 226" stroke-dashoffset="-218" stroke-linecap="round"/>
+                  <text x="60" y="64" text-anchor="middle" font-size="13" font-weight="700" fill="#1a2a4a">62.5%</text>
+                </svg>
+                <div class="donut-legend">
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>Paid — 500 (62.5%)</span></div>
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--navy)"></div><span>Partial — 200 (25%)</span></div>
+                  <div class="legend-item"><div class="legend-dot" style="background:var(--gray-200)"></div><span>Outstanding — 100 (12.5%)</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><span class="card-title">⚠️ Students at Risk (Low GPA)</span></div>
+            <div class="card-body" id="atRiskList"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📋 Recent Audit Activity</span></div>
+            <div class="card-body" id="recentAudit"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STUDENTS ── -->
+      <div class="page-section" id="sec-students">
+        <div class="action-bar">
+          <input class="search-input" placeholder="🔍 Search students..." oninput="filterTable(this,'studentsTable')">
+          <button class="btn btn-gold" onclick="openModal('modalStudent')">+ Add Student</button>
+          <button class="btn btn-outline">⬇ Export</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">👥 Student Records</span>
+            <span class="badge badge-navy" id="studentCount">0 students</span>
+          </div>
+          <div class="table-wrap">
+            <table id="studentsTable">
+              <thead>
+                <tr>
+                  <th>Student ID</th><th>Full Name</th><th>Department</th><th>Program</th>
+                  <th>Year</th><th>GPA</th><th>Status</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="studentsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── COURSES ── -->
+      <div class="page-section" id="sec-courses">
+        <div class="action-bar">
+          <input class="search-input" placeholder="🔍 Search courses..." oninput="filterTable(this,'coursesTable')">
+          <button class="btn btn-gold" onclick="openModal('modalCourse')">+ Add Course</button>
+          <button class="btn btn-outline">⬇ Export</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📚 Course Catalog</span>
+            <span class="badge badge-navy" id="courseCount">0 courses</span>
+          </div>
+          <div class="table-wrap">
+            <table id="coursesTable">
+              <thead>
+                <tr>
+                  <th>Course Code</th><th>Course Name</th><th>Department</th>
+                  <th>Credits</th><th>Instructor</th><th>Enrolled</th><th>Status</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="coursesTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ENROLLMENT ── -->
+      <div class="page-section" id="sec-enrollment">
+        <div class="action-bar">
+          <input class="search-input" placeholder="🔍 Search enrollments..." oninput="filterTable(this,'enrollTable')">
+          <button class="btn btn-gold" onclick="openModal('modalEnroll')">+ Enroll Student</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📝 Enrollment Records</span>
+            <span class="badge badge-navy" id="enrollCount">0 enrollments</span>
+          </div>
+          <div class="table-wrap">
+            <table id="enrollTable">
+              <thead>
+                <tr>
+                  <th>Enrollment ID</th><th>Student</th><th>Course</th>
+                  <th>Semester</th><th>Enrolled Date</th><th>Status</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="enrollTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GRADES ── -->
+      <div class="page-section" id="sec-grades">
+        <div class="action-bar">
+          <input class="search-input" placeholder="🔍 Search grades..." oninput="filterTable(this,'gradesTable')">
+          <button class="btn btn-gold" onclick="openModal('modalGrade')">+ Enter Grade</button>
+          <button class="btn btn-outline">📄 Transcript</button>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><span class="card-title">📈 GPA Distribution</span></div>
+            <div class="card-body" id="gpaDistribution"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">📊 Course Pass Rate</span></div>
+            <div class="card-body" id="passRateChart"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🏆 Grade Records</span>
+            <span class="badge badge-navy" id="gradeCount">0 records</span>
+          </div>
+          <div class="table-wrap">
+            <table id="gradesTable">
+              <thead>
+                <tr>
+                  <th>Student ID</th><th>Student Name</th><th>Course</th>
+                  <th>Score</th><th>Grade</th><th>GPA Points</th><th>Semester</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="gradesTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FEES ── -->
+      <div class="page-section" id="sec-fees">
+        <div class="stats-grid" id="feeStats"></div>
+        <div class="action-bar">
+          <input class="search-input" placeholder="🔍 Search fee records..." oninput="filterTable(this,'feesTable')">
+          <button class="btn btn-gold" onclick="openModal('modalFee')">+ Record Payment</button>
+          <button class="btn btn-outline btn-danger">⚠️ Fee Defaulters</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💳 Fee Records</span>
+            <span class="badge badge-navy" id="feeCount">0 records</span>
+          </div>
+          <div class="table-wrap">
+            <table id="feesTable">
+              <thead>
+                <tr>
+                  <th>Receipt No</th><th>Student</th><th>Fee Type</th>
+                  <th>Amount (¥)</th><th>Paid (¥)</th><th>Balance (¥)</th><th>Status</th><th>Date</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="feesTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── USERS ── -->
+      <div class="page-section" id="sec-users">
+        <div class="action-bar">
+          <input class="search-input" placeholder="🔍 Search users..." oninput="filterTable(this,'usersTable')">
+          <button class="btn btn-gold" onclick="openModal('modalUser')">+ Add User</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">👤 System Users</span>
+            <span class="badge badge-navy" id="userCount">0 users</span>
+          </div>
+          <div class="table-wrap">
+            <table id="usersTable">
+              <thead>
+                <tr>
+                  <th>User ID</th><th>Username</th><th>Full Name</th>
+                  <th>Email</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="usersTbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">🔐 RBAC Permissions Matrix</span></div>
+          <div class="card-body">
+            <div class="table-wrap">
+              <table class="perm-table">
+                <thead>
+                  <tr>
+                    <th>Permission</th>
+                    <th>Admin</th><th>Registrar</th><th>Lecturer</th><th>Finance</th><th>Student</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Manage Users</td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td></tr>
+                  <tr><td>Manage Students</td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td></tr>
+                  <tr><td>Manage Courses</td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td></tr>
+                  <tr><td>Enter Grades</td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-partial">Own Courses</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td></tr>
+                  <tr><td>Manage Fees</td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td></tr>
+                  <tr><td>View Grades</td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-partial">Own Only</span></td></tr>
+                  <tr><td>View Own Profile</td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td></tr>
+                  <tr><td>View Audit Log</td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td><td><span class="perm-no">✘</span></td></tr>
+                  <tr><td>Generate Reports</td><td><span class="perm-yes">✔</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-partial">Own Data</span></td><td><span class="perm-yes">✔</span></td><td><span class="perm-no">✘</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── REPORTS ── -->
+      <div class="page-section" id="sec-reports">
+        <div class="three-col">
+          <div class="card" style="cursor:pointer" onclick="showToast('Generating report...','info')">
+            <div class="card-body" style="text-align:center;padding:2rem 1rem">
+              <div style="font-size:2rem;margin-bottom:.75rem">👥</div>
+              <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Students per Department</div>
+              <div style="font-size:.78rem;color:var(--gray-600)">Distribution across all departments</div>
+              <button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showToast('Report generated!','success')">Generate PDF</button>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer">
+            <div class="card-body" style="text-align:center;padding:2rem 1rem">
+              <div style="font-size:2rem;margin-bottom:.75rem">⚠️</div>
+              <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Fee Defaulters List</div>
+              <div style="font-size:.78rem;color:var(--gray-600)">Students with outstanding balances</div>
+              <button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showToast('Report generated!','success')">Generate PDF</button>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer">
+            <div class="card-body" style="text-align:center;padding:2rem 1rem">
+              <div style="font-size:2rem;margin-bottom:.75rem">📈</div>
+              <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Course Pass Rate</div>
+              <div style="font-size:.78rem;color:var(--gray-600)">Analysis of student performance</div>
+              <button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showToast('Report generated!','success')">Generate PDF</button>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer">
+            <div class="card-body" style="text-align:center;padding:2rem 1rem">
+              <div style="font-size:2rem;margin-bottom:.75rem">📉</div>
+              <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Low Attendance Report</div>
+              <div style="font-size:.78rem;color:var(--gray-600)">Students below 75% attendance</div>
+              <button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showToast('Report generated!','success')">Generate PDF</button>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer">
+            <div class="card-body" style="text-align:center;padding:2rem 1rem">
+              <div style="font-size:2rem;margin-bottom:.75rem">🏆</div>
+              <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">GPA Transcript</div>
+              <div style="font-size:.78rem;color:var(--gray-600)">Individual student transcripts</div>
+              <button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showToast('Report generated!','success')">Generate PDF</button>
+            </div>
+          </div>
+          <div class="card" style="cursor:pointer">
+            <div class="card-body" style="text-align:center;padding:2rem 1rem">
+              <div style="font-size:2rem;margin-bottom:.75rem">📊</div>
+              <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Enrollment Summary</div>
+              <div style="font-size:.78rem;color:var(--gray-600)">By course, department, semester</div>
+              <button class="btn btn-primary btn-sm" style="margin-top:1rem" onclick="showToast('Report generated!','success')">Generate PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── AUDIT LOG ── -->
+      <div class="page-section" id="sec-audit">
+        <div class="action-bar">
+          <input class="search-input" placeholder="🔍 Search audit log..." oninput="filterTable(this,'auditTable')">
+          <select class="form-control-app" style="width:auto;padding:.55rem .9rem">
+            <option>All Actions</option>
+            <option>LOGIN</option><option>LOGOUT</option>
+            <option>CREATE</option><option>UPDATE</option><option>DELETE</option>
+          </select>
+          <button class="btn btn-outline">⬇ Export Log</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🔍 System Audit Log</span>
+            <span class="badge badge-navy" id="auditCount">0 entries</span>
+          </div>
+          <div class="table-wrap">
+            <table id="auditTable">
+              <thead>
+                <tr>
+                  <th>#</th><th>Timestamp</th><th>User</th><th>Role</th>
+                  <th>Action</th><th>Module</th><th>Description</th><th>IP Address</th>
+                </tr>
+              </thead>
+              <tbody id="auditTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PROFILE ── -->
+      <div class="page-section" id="sec-profile">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><span class="card-title">👤 My Profile</span></div>
+            <div class="card-body" id="profileBody"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">🔒 Change Password</span></div>
+            <div class="card-body">
+              <div class="form-group-app">
+                <label>Current Password</label>
+                <input class="form-control-app" type="password" placeholder="••••••••">
+              </div>
+              <div class="form-group-app">
+                <label>New Password</label>
+                <input class="form-control-app" type="password" placeholder="••••••••">
+              </div>
+              <div class="form-group-app">
+                <label>Confirm New Password</label>
+                <input class="form-control-app" type="password" placeholder="••••••••">
+              </div>
+              <button class="btn btn-primary" onclick="showToast('Password updated successfully!','success')">Update Password</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-content -->
+</div><!-- /app -->
+
+<!-- ════════════════════════════════════════════
+     MODALS
+════════════════════════════════════════════ -->
+
+<!-- Add Student -->
+<div class="modal-overlay" id="modalStudent">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">➕ Add New Student</span>
+      <button class="modal-close" onclick="closeModal('modalStudent')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>First Name *</label>
+          <input class="form-control-app" id="s_fname" placeholder="First name">
+        </div>
+        <div class="form-group-app">
+          <label>Last Name *</label>
+          <input class="form-control-app" id="s_lname" placeholder="Last name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Student ID *</label>
+          <input class="form-control-app" id="s_id" placeholder="e.g. STU2024001">
+        </div>
+        <div class="form-group-app">
+          <label>Date of Birth</label>
+          <input class="form-control-app" id="s_dob" type="date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Department *</label>
+          <select class="form-control-app" id="s_dept">
+            <option>Computer Engineering</option>
+            <option>Software Engineering</option>
+            <option>Intelligent Science</option>
+            <option>Electronic Engineering</option>
+            <option>Business School</option>
+            <option>Network Security</option>
+          </select>
+        </div>
+        <div class="form-group-app">
+          <label>Program *</label>
+          <input class="form-control-app" id="s_prog" placeholder="e.g. B.Sc. Computer Science">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Year of Study</label>
+          <select class="form-control-app" id="s_year">
+            <option>Year 1</option><option>Year 2</option><option>Year 3</option><option>Year 4</option>
+          </select>
+        </div>
+        <div class="form-group-app">
+          <label>Gender</label>
+          <select class="form-control-app" id="s_gender">
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group-app">
+        <label>Email Address *</label>
+        <input class="form-control-app" id="s_email" type="email" placeholder="student@jit.edu.cn">
+      </div>
+      <div class="form-group-app">
+        <label>Phone Number</label>
+        <input class="form-control-app" id="s_phone" placeholder="+86 ...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modalStudent')">Cancel</button>
+      <button class="btn btn-gold" onclick="addStudent()">Save Student</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Course -->
+<div class="modal-overlay" id="modalCourse">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">📚 Add New Course</span>
+      <button class="modal-close" onclick="closeModal('modalCourse')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Course Code *</label>
+          <input class="form-control-app" id="c_code" placeholder="e.g. CS301">
+        </div>
+        <div class="form-group-app">
+          <label>Credits *</label>
+          <input class="form-control-app" id="c_credits" type="number" min="1" max="6" value="3">
+        </div>
+      </div>
+      <div class="form-group-app">
+        <label>Course Name *</label>
+        <input class="form-control-app" id="c_name" placeholder="e.g. Database Systems">
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Department *</label>
+          <select class="form-control-app" id="c_dept">
+            <option>Computer Engineering</option>
+            <option>Software Engineering</option>
+            <option>Intelligent Science</option>
+            <option>Electronic Engineering</option>
+            <option>Business School</option>
+          </select>
+        </div>
+        <div class="form-group-app">
+          <label>Instructor *</label>
+          <input class="form-control-app" id="c_instructor" placeholder="Instructor name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Max Enrollment</label>
+          <input class="form-control-app" id="c_max" type="number" value="50">
+        </div>
+        <div class="form-group-app">
+          <label>Semester</label>
+          <select class="form-control-app" id="c_sem">
+            <option>Semester 1 2024/25</option>
+            <option>Semester 2 2024/25</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modalCourse')">Cancel</button>
+      <button class="btn btn-gold" onclick="addCourse()">Save Course</button>
+    </div>
+  </div>
+</div>
+
+<!-- Enroll Student -->
+<div class="modal-overlay" id="modalEnroll">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">📝 Enroll Student in Course</span>
+      <button class="modal-close" onclick="closeModal('modalEnroll')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group-app">
+        <label>Select Student *</label>
+        <select class="form-control-app" id="e_student">
+          <option value="">— Select Student —</option>
+        </select>
+      </div>
+      <div class="form-group-app">
+        <label>Select Course *</label>
+        <select class="form-control-app" id="e_course">
+          <option value="">— Select Course —</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Semester</label>
+          <select class="form-control-app" id="e_sem">
+            <option>Semester 1 2024/25</option>
+            <option>Semester 2 2024/25</option>
+          </select>
+        </div>
+        <div class="form-group-app">
+          <label>Enrollment Date</label>
+          <input class="form-control-app" id="e_date" type="date">
+        </div>
+      </div>
+      <div class="alert alert-warning">⚠️ System checks for duplicate enrollments automatically.</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modalEnroll')">Cancel</button>
+      <button class="btn btn-gold" onclick="addEnrollment()">Confirm Enrollment</button>
+    </div>
+  </div>
+</div>
+
+<!-- Enter Grade -->
+<div class="modal-overlay" id="modalGrade">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">🏆 Enter Grade</span>
+      <button class="modal-close" onclick="closeModal('modalGrade')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group-app">
+        <label>Select Student *</label>
+        <select class="form-control-app" id="g_student">
+          <option value="">— Select Student —</option>
+        </select>
+      </div>
+      <div class="form-group-app">
+        <label>Select Course *</label>
+        <select class="form-control-app" id="g_course">
+          <option value="">— Select Course —</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Score (0–100) *</label>
+          <input class="form-control-app" id="g_score" type="number" min="0" max="100" oninput="computeGrade(this.value)">
+        </div>
+        <div class="form-group-app">
+          <label>Grade (auto)</label>
+          <input class="form-control-app" id="g_letter" readonly placeholder="e.g. A">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>GPA Points (auto)</label>
+          <input class="form-control-app" id="g_points" readonly>
+        </div>
+        <div class="form-group-app">
+          <label>Semester</label>
+          <select class="form-control-app" id="g_sem">
+            <option>Semester 1 2024/25</option>
+            <option>Semester 2 2024/25</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modalGrade')">Cancel</button>
+      <button class="btn btn-gold" onclick="addGrade()">Save Grade</button>
+    </div>
+  </div>
+</div>
+
+<!-- Record Payment -->
+<div class="modal-overlay" id="modalFee">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">💰 Record Fee / Payment</span>
+      <button class="modal-close" onclick="closeModal('modalFee')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group-app">
+        <label>Select Student *</label>
+        <select class="form-control-app" id="f_student">
+          <option value="">— Select Student —</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Fee Type *</label>
+          <select class="form-control-app" id="f_type">
+            <option>Tuition Fee</option>
+            <option>Accommodation</option>
+            <option>Laboratory</option>
+            <option>Library</option>
+            <option>Registration</option>
+          </select>
+        </div>
+        <div class="form-group-app">
+          <label>Semester</label>
+          <select class="form-control-app" id="f_sem">
+            <option>Semester 1 2024/25</option>
+            <option>Semester 2 2024/25</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Total Amount (¥) *</label>
+          <input class="form-control-app" id="f_total" type="number" min="0">
+        </div>
+        <div class="form-group-app">
+          <label>Amount Paid (¥) *</label>
+          <input class="form-control-app" id="f_paid" type="number" min="0">
+        </div>
+      </div>
+      <div class="form-group-app">
+        <label>Payment Method</label>
+        <select class="form-control-app" id="f_method">
+          <option>WeChat Pay</option><option>Alipay</option><option>Bank Transfer</option><option>Cash</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modalFee')">Cancel</button>
+      <button class="btn btn-gold" onclick="addFee()">Record Payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add User -->
+<div class="modal-overlay" id="modalUser">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">👤 Add System User</span>
+      <button class="modal-close" onclick="closeModal('modalUser')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>First Name *</label>
+          <input class="form-control-app" id="u_fname" placeholder="First name">
+        </div>
+        <div class="form-group-app">
+          <label>Last Name *</label>
+          <input class="form-control-app" id="u_lname" placeholder="Last name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Username *</label>
+          <input class="form-control-app" id="u_uname" placeholder="Username">
+        </div>
+        <div class="form-group-app">
+          <label>Role *</label>
+          <select class="form-control-app" id="u_role">
+            <option value="admin">Administrator</option>
+            <option value="registrar">Registrar</option>
+            <option value="lecturer">Lecturer</option>
+            <option value="finance">Finance Officer</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group-app">
+        <label>Email Address *</label>
+        <input class="form-control-app" id="u_email" type="email" placeholder="user@jit.edu.cn">
+      </div>
+      <div class="form-row">
+        <div class="form-group-app">
+          <label>Password *</label>
+          <input class="form-control-app" id="u_pass" type="password" placeholder="Min 8 chars">
+        </div>
+        <div class="form-group-app">
+          <label>Status</label>
+          <select class="form-control-app" id="u_status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modalUser')">Cancel</button>
+      <button class="btn btn-gold" onclick="addUser()">Create User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT — APPLICATION LOGIC
+════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── STATE ─── */
+let currentUser = null;
+
+const DB = {
+  students: [
+    {id:'STU2024001',fname:'Wei',lname:'Zhang',dept:'Computer Engineering',prog:'B.Sc. CS',year:'Year 2',gpa:3.8,email:'wei.zhang@jit.edu.cn',phone:'138-0000-1001',gender:'Male',status:'Active',dob:'2003-05-12'},
+    {id:'STU2024002',fname:'Mei',lname:'Liu',dept:'Software Engineering',prog:'B.Sc. SE',year:'Year 1',gpa:3.5,email:'mei.liu@jit.edu.cn',phone:'138-0000-1002',gender:'Female',status:'Active',dob:'2004-02-20'},
+    {id:'STU2024003',fname:'Jun',lname:'Chen',dept:'Business School',prog:'B.Sc. Finance',year:'Year 3',gpa:2.1,email:'jun.chen@jit.edu.cn',phone:'138-0000-1003',gender:'Male',status:'Active',dob:'2002-08-15'},
+    {id:'STU2024004',fname:'Yaseen',lname:'Al-Rashid',dept:'Computer Engineering',prog:'B.Sc. CS',year:'Year 2',gpa:3.9,email:'yaseen@jit.edu.cn',phone:'138-0000-1004',gender:'Male',status:'Active',dob:'2003-11-01'},
+    {id:'STU2024005',fname:'Xin',lname:'Wang',dept:'Intelligent Science',prog:'B.Sc. AI',year:'Year 2',gpa:2.3,email:'xin.wang@jit.edu.cn',phone:'138-0000-1005',gender:'Female',status:'Active',dob:'2003-07-22'},
+    {id:'STU2024006',fname:'Hao',lname:'Li',dept:'Network Security',prog:'B.Sc. Cyber',year:'Year 4',gpa:3.2,email:'hao.li@jit.edu.cn',phone:'138-0000-1006',gender:'Male',status:'Inactive',dob:'2001-03-30'},
+    {id:'STU2024007',fname:'Fang',lname:'Zhou',dept:'Electronic Engineering',prog:'B.Sc. EE',year:'Year 1',gpa:3.6,email:'fang.zhou@jit.edu.cn',phone:'138-0000-1007',gender:'Female',status:'Active',dob:'2004-09-14'},
+    {id:'STU2024008',fname:'Song',lname:'Zhenhua',dept:'Computer Engineering',prog:'B.Sc. CS',year:'Year 2',gpa:3.4,email:'song.zhenhua@jit.edu.cn',phone:'138-0000-1008',gender:'Male',status:'Active',dob:'2003-12-05'},
+  ],
+  courses: [
+    {code:'CS301',name:'Database Systems',dept:'Computer Engineering',credits:3,instructor:'Prof. Li Gang',enrolled:45,max:50,semester:'Sem 1 2024/25',status:'Active'},
+    {code:'CS201',name:'Data Structures & Algorithms',dept:'Computer Engineering',credits:4,instructor:'Prof. Wang Fang',enrolled:38,max:40,semester:'Sem 1 2024/25',status:'Active'},
+    {code:'SE401',name:'Software Engineering Principles',dept:'Software Engineering',credits:3,instructor:'Prof. Chen Jun',enrolled:30,max:35,semester:'Sem 1 2024/25',status:'Active'},
+    {code:'AI301',name:'Machine Learning Fundamentals',dept:'Intelligent Science',credits:4,instructor:'Prof. Liu Mei',enrolled:25,max:30,semester:'Sem 1 2024/25',status:'Active'},
+    {code:'CS101',name:'Introduction to Programming',dept:'Computer Engineering',credits:3,instructor:'Prof. Zhao Wei',enrolled:50,max:50,semester:'Sem 1 2024/25',status:'Full'},
+    {code:'NET201',name:'Network Security Basics',dept:'Network Security',credits:3,instructor:'Prof. Sun Hong',enrolled:20,max:30,semester:'Sem 2 2024/25',status:'Active'},
+    {code:'BUS201',name:'Management Information Systems',dept:'Business School',credits:3,instructor:'Prof. Yang Min',enrolled:35,max:40,semester:'Sem 1 2024/25',status:'Active'},
+  ],
+  enrollments: [
+    {id:'ENR001',student:'STU2024001',studentName:'Wei Zhang',course:'CS301',courseName:'Database Systems',semester:'Sem 1 2024/25',date:'2024-09-01',status:'Active'},
+    {id:'ENR002',student:'STU2024002',studentName:'Mei Liu',course:'CS201',courseName:'Data Structures',semester:'Sem 1 2024/25',date:'2024-09-01',status:'Active'},
+    {id:'ENR003',student:'STU2024003',studentName:'Jun Chen',course:'BUS201',courseName:'Management IS',semester:'Sem 1 2024/25',date:'2024-09-01',status:'Active'},
+    {id:'ENR004',student:'STU2024004',studentName:'Yaseen Al-Rashid',course:'CS301',courseName:'Database Systems',semester:'Sem 1 2024/25',date:'2024-09-01',status:'Active'},
+    {id:'ENR005',student:'STU2024005',studentName:'Xin Wang',course:'AI301',courseName:'Machine Learning',semester:'Sem 1 2024/25',date:'2024-09-02',status:'Active'},
+    {id:'ENR006',student:'STU2024008',studentName:'Song Zhenhua',course:'CS301',courseName:'Database Systems',semester:'Sem 1 2024/25',date:'2024-09-02',status:'Active'},
+  ],
+  grades: [
+    {studentId:'STU2024001',studentName:'Wei Zhang',course:'CS301',courseName:'Database Systems',score:92,letter:'A',points:4.0,semester:'Sem 1 2024/25'},
+    {studentId:'STU2024002',studentName:'Mei Liu',course:'CS201',courseName:'Data Structures',score:85,letter:'B+',points:3.5,semester:'Sem 1 2024/25'},
+    {studentId:'STU2024003',studentName:'Jun Chen',course:'BUS201',courseName:'Management IS',score:62,letter:'C',points:2.0,semester:'Sem 1 2024/25'},
+    {studentId:'STU2024004',studentName:'Yaseen Al-Rashid',course:'CS301',courseName:'Database Systems',score:97,letter:'A+',points:4.0,semester:'Sem 1 2024/25'},
+    {studentId:'STU2024005',studentName:'Xin Wang',course:'AI301',courseName:'Machine Learning',score:70,letter:'B-',points:2.7,semester:'Sem 1 2024/25'},
+    {studentId:'STU2024008',studentName:'Song Zhenhua',course:'CS301',courseName:'Database Systems',score:88,letter:'B+',points:3.5,semester:'Sem 1 2024/25'},
+  ],
+  fees: [
+    {receipt:'RCP001',student:'STU2024001',studentName:'Wei Zhang',type:'Tuition Fee',semester:'Sem 1 2024/25',total:12000,paid:12000,date:'2024-08-28',method:'Alipay'},
+    {receipt:'RCP002',student:'STU2024002',studentName:'Mei Liu',type:'Tuition Fee',semester:'Sem 1 2024/25',total:12000,paid:8000,date:'2024-08-30',method:'WeChat Pay'},
+    {receipt:'RCP003',student:'STU2024003',studentName:'Jun Chen',type:'Tuition Fee',semester:'Sem 1 2024/25',total:12000,paid:0,date:'-',method:'-'},
+    {receipt:'RCP004',student:'STU2024004',studentName:'Yaseen Al-Rashid',type:'Tuition Fee',semester:'Sem 1 2024/25',total:18000,paid:18000,date:'2024-08-25',method:'Bank Transfer'},
+    {receipt:'RCP005',student:'STU2024005',studentName:'Xin Wang',type:'Accommodation',semester:'Sem 1 2024/25',total:5000,paid:5000,date:'2024-09-01',method:'WeChat Pay'},
+    {receipt:'RCP006',student:'STU2024008',studentName:'Song Zhenhua',type:'Tuition Fee',semester:'Sem 1 2024/25',total:12000,paid:6000,date:'2024-09-05',method:'Alipay'},
+  ],
+  users: [
+    {id:'USR001',username:'admin001',fname:'System',lname:'Administrator',email:'admin@jit.edu.cn',role:'admin',status:'active',lastLogin:'2024-12-15 09:30'},
+    {id:'USR002',username:'reg001',fname:'Wang',lname:'Fang',email:'reg@jit.edu.cn',role:'registrar',status:'active',lastLogin:'2024-12-15 08:15'},
+    {id:'USR003',username:'lec001',fname:'Li',lname:'Gang',email:'lec@jit.edu.cn',role:'lecturer',status:'active',lastLogin:'2024-12-14 14:22'},
+    {id:'USR004',username:'fin001',fname:'Sun',lname:'Hong',email:'fin@jit.edu.cn',role:'finance',status:'active',lastLogin:'2024-12-15 10:05'},
+    {id:'USR005',username:'stu001',fname:'Yaseen',lname:'Al-Rashid',email:'yaseen@jit.edu.cn',role:'student',status:'active',lastLogin:'2024-12-15 11:00'},
+  ],
+  audit: [
+    {id:1,time:'2024-12-15 11:05',user:'admin001',role:'Admin',action:'LOGIN',module:'Auth',desc:'Successful login from web browser',ip:'192.168.1.100'},
+    {id:2,time:'2024-12-15 11:08',user:'admin001',role:'Admin',action:'CREATE',module:'Students',desc:'Added new student STU2024004 Yaseen Al-Rashid',ip:'192.168.1.100'},
+    {id:3,time:'2024-12-15 10:55',user:'lec001',role:'Lecturer',action:'UPDATE',module:'Grades',desc:'Entered grade A+ for STU2024004 in CS301',ip:'192.168.1.102'},
+    {id:4,time:'2024-12-15 10:30',user:'fin001',role:'Finance',action:'CREATE',module:'Fees',desc:'Recorded payment ¥18,000 for STU2024004',ip:'192.168.1.103'},
+    {id:5,time:'2024-12-15 09:50',user:'reg001',role:'Registrar',action:'CREATE',module:'Enrollment',desc:'Enrolled STU2024004 in CS301 Database Systems',ip:'192.168.1.101'},
+    {id:6,time:'2024-12-14 16:00',user:'admin001',role:'Admin',action:'UPDATE',module:'Users',desc:'Updated status for USR006 to inactive',ip:'192.168.1.100'},
+    {id:7,time:'2024-12-14 15:30',user:'stu001',role:'Student',action:'LOGIN',module:'Auth',desc:'Student login — viewed own profile',ip:'192.168.1.120'},
+    {id:8,time:'2024-12-14 14:00',user:'reg001',role:'Registrar',action:'CREATE',module:'Courses',desc:'Added new course NET201 Network Security Basics',ip:'192.168.1.101'},
+  ]
+};
+
+/* ─── NAV CONFIG per role ─── */
+const NAV_CONFIG = {
+  admin: [
+    { section:'dashboard', icon:'🏠', label:'Dashboard' },
+    { label:'Academic', divider:true },
+    { section:'students',  icon:'👥', label:'Students' },
+    { section:'courses',   icon:'📚', label:'Courses' },
+    { section:'enrollment',icon:'📝', label:'Enrollment' },
+    { section:'grades',    icon:'🏆', label:'Grades' },
+    { label:'Finance', divider:true },
+    { section:'fees',      icon:'💰', label:'Fees & Payments' },
+    { label:'Administration', divider:true },
+    { section:'users',     icon:'👤', label:'User Management' },
+    { section:'reports',   icon:'📊', label:'Reports' },
+    { section:'audit',     icon:'🔍', label:'Audit Log' },
+    { label:'Account', divider:true },
+    { section:'profile',   icon:'⚙️', label:'My Profile' },
+  ],
+  registrar: [
+    { section:'dashboard', icon:'🏠', label:'Dashboard' },
+    { label:'Academic', divider:true },
+    { section:'students',  icon:'👥', label:'Students' },
+    { section:'courses',   icon:'📚', label:'Courses' },
+    { section:'enrollment',icon:'📝', label:'Enrollment' },
+    { section:'grades',    icon:'🏆', label:'View Grades' },
+    { label:'Reports', divider:true },
+    { section:'reports',   icon:'📊', label:'Reports' },
+    { label:'Account', divider:true },
+    { section:'profile',   icon:'⚙️', label:'My Profile' },
+  ],
+  lecturer: [
+    { section:'dashboard', icon:'🏠', label:'Dashboard' },
+    { label:'Teaching', divider:true },
+    { section:'courses',   icon:'📚', label:'My Courses' },
+    { section:'grades',    icon:'🏆', label:'Enter Grades' },
+    { label:'Account', divider:true },
+    { section:'profile',   icon:'⚙️', label:'My Profile' },
+  ],
+  finance: [
+    { section:'dashboard', icon:'🏠', label:'Dashboard' },
+    { label:'Finance', divider:true },
+    { section:'fees',      icon:'💰', label:'Fees & Payments' },
+    { section:'students',  icon:'👥', label:'View Students' },
+    { section:'reports',   icon:'📊', label:'Financial Reports' },
+    { label:'Account', divider:true },
+    { section:'profile',   icon:'⚙️', label:'My Profile' },
+  ],
+  student: [
+    { section:'dashboard', icon:'🏠', label:'My Dashboard' },
+    { label:'Academic', divider:true },
+    { section:'grades',    icon:'🏆', label:'My Grades' },
+    { section:'enrollment',icon:'📝', label:'My Enrollments' },
+    { label:'Finance', divider:true },
+    { section:'fees',      icon:'💰', label:'My Fees' },
+    { label:'Account', divider:true },
+    { section:'profile',   icon:'⚙️', label:'My Profile' },
+  ]
+};
+
+const USERS_DB = {
+  admin001:    { pass:'admin123', role:'admin',     name:'System Administrator', title:'System Administrator' },
+  reg001:      { pass:'reg123',   role:'registrar', name:'Wang Fang',            title:'Registrar Officer' },
+  lec001:      { pass:'lec123',   role:'lecturer',  name:'Prof. Li Gang',        title:'Lecturer' },
+  fin001:      { pass:'fin123',   role:'finance',   name:'Sun Hong',             title:'Finance Officer' },
+  stu001:      { pass:'stu123',   role:'student',   name:'Yaseen Al-Rashid',     title:'Student — Year 2' },
+};
+
+/* ─── AUTH ─── */
+function setDemo(role, user, pass) {
+  document.getElementById('loginRole').value = role;
+  document.getElementById('loginUser').value = user;
+  document.getElementById('loginPass').value = pass;
+}
+
+function doLogin() {
+  const uid  = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const role = document.getElementById('loginRole').value;
+
+  const u = USERS_DB[uid];
+  if (!u || u.pass !== pass || u.role !== role) {
+    showToast('Invalid credentials. Please try again.', 'error');
+    return;
+  }
+  currentUser = { id: uid, ...u };
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  initApp();
+  logAudit('LOGIN', 'Auth', `Successful login for ${uid}`);
+}
+
+function doLogout() {
+  logAudit('LOGOUT', 'Auth', `User ${currentUser.id} logged out`);
+  currentUser = null;
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  showToast('Signed out successfully', 'success');
+}
+
+/* ─── INIT APP ─── */
+function initApp() {
+  renderSidebarUser();
+  renderSidebarNav();
+  setTopbarDate();
+  populateDropdowns();
+  navigateTo('dashboard');
+}
+
+function setTopbarDate() {
+  document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('en-GB', {
+    weekday:'short', year:'numeric', month:'short', day:'numeric'
+  });
+}
+
+function renderSidebarUser() {
+  const u = currentUser;
+  const initials = u.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('sidebarUser').innerHTML = `
+    <div class="user-avatar">${initials}</div>
+    <div class="user-name">${u.name}</div>
+    <div class="user-role">${u.title}</div>
+  `;
+}
+
+function renderSidebarNav() {
+  const nav = NAV_CONFIG[currentUser.role] || NAV_CONFIG.student;
+  let html = '';
+  nav.forEach(item => {
+    if (item.divider) {
+      html += `<div class="nav-section-label">${item.label}</div>`;
+    } else {
+      html += `<div class="nav-item" id="nav-${item.section}" onclick="navigateTo('${item.section}')">
+        <span class="nav-icon">${item.icon}</span>${item.label}
+      </div>`;
+    }
+  });
+  document.getElementById('sidebarNav').innerHTML = html;
+}
+
+/* ─── NAVIGATION ─── */
+const PAGE_TITLES = {
+  dashboard: { icon:'🏠', label:'Dashboard' },
+  students:  { icon:'👥', label:'Student Records' },
+  courses:   { icon:'📚', label:'Course Catalog' },
+  enrollment:{ icon:'📝', label:'Enrollment Management' },
+  grades:    { icon:'🏆', label:'Grade Management' },
+  fees:      { icon:'💰', label:'Fees & Payments' },
+  users:     { icon:'👤', label:'User Management' },
+  reports:   { icon:'📊', label:'Management Reports' },
+  audit:     { icon:'🔍', label:'Audit Log' },
+  profile:   { icon:'⚙️', label:'My Profile' },
+};
+
+function navigateTo(section) {
+  document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+  const sec = document.getElementById('sec-' + section);
+  if (!sec) return;
+  sec.classList.add('active');
+
+  const navEl = document.getElementById('nav-' + section);
+  if (navEl) navEl.classList.add('active');
+
+  const pt = PAGE_TITLES[section] || { icon:'', label: section };
+  document.getElementById('pageTitle').innerHTML = `<span class="page-icon">${pt.icon}</span><span>${pt.label}</span>`;
+
+  // Render content
+  const renders = {
+    dashboard:  renderDashboard,
+    students:   renderStudents,
+    courses:    renderCourses,
+    enrollment: renderEnrollment,
+    grades:     renderGrades,
+    fees:       renderFees,
+    users:      renderUsers,
+    audit:      renderAudit,
+    profile:    renderProfile,
+  };
+  if (renders[section]) renders[section]();
+}
+
+/* ─── DASHBOARD ─── */
+function renderDashboard() {
+  const totalStudents = DB.students.length;
+  const activeEnroll  = DB.enrollments.filter(e => e.status === 'Active').length;
+  const feePaid       = DB.fees.filter(f => f.paid >= f.total).length;
+  const feeRate       = DB.fees.length > 0 ? Math.round((feePaid / DB.fees.length) * 100) : 0;
+  const avgGPA        = (DB.students.reduce((s,st) => s + st.gpa, 0) / totalStudents).toFixed(2);
+  const atRisk        = DB.students.filter(st => st.gpa < 2.5).length;
+
+  const r = currentUser.role;
+  let stats = [];
+  if (['admin','registrar'].includes(r)) {
+    stats = [
+      { icon:'👥', iconClass:'navy',  value: totalStudents, label:'Total Students',     change:'+3 this month', up:true },
+      { icon:'📝', iconClass:'gold',  value: activeEnroll,  label:'Active Enrollments', change:'+12 this week',  up:true },
+      { icon:'⭐', iconClass:'teal',  value: avgGPA,        label:'Average GPA',        change:'↑ 0.2 pts',     up:true },
+      { icon:'⚠️', iconClass:'red',   value: atRisk,        label:'Students at Risk',   change:'Needs attention',up:false },
+    ];
+  } else if (r === 'finance') {
+    stats = [
+      { icon:'💰', iconClass:'gold',  value: '¥' + (DB.fees.reduce((s,f) => s+f.paid, 0)/1000).toFixed(0) + 'K', label:'Total Collected', change:'+¥12K this week', up:true },
+      { icon:'✅', iconClass:'green', value: feeRate + '%', label:'Collection Rate',    change:'Target: 90%', up:true },
+      { icon:'⚠️', iconClass:'red',   value: DB.fees.filter(f => f.paid < f.total).length, label:'Fee Defaulters', change:'Requires follow-up', up:false },
+      { icon:'📋', iconClass:'teal',  value: DB.fees.length, label:'Total Records',    change:'All semesters', up:true },
+    ];
+  } else if (r === 'lecturer') {
+    stats = [
+      { icon:'📚', iconClass:'navy',  value: DB.courses.length, label:'Total Courses',  change:'This semester', up:true },
+      { icon:'👥', iconClass:'gold',  value: DB.enrollments.length, label:'My Students', change:'Across all courses', up:true },
+      { icon:'✅', iconClass:'green', value: DB.grades.filter(g => g.score >= 60).length, label:'Passing Students', change:'Score ≥ 60', up:true },
+      { icon:'⭐', iconClass:'teal',  value: avgGPA, label:'Class Average GPA',       change:'', up:true },
+    ];
+  } else {
+    // student
+    stats = [
+      { icon:'📝', iconClass:'gold',  value: DB.enrollments.filter(e => e.student === 'STU2024004').length, label:'My Enrollments', change:'This semester', up:true },
+      { icon:'⭐', iconClass:'navy',  value: '3.9', label:'My GPA',     change:'Top of class', up:true },
+      { icon:'💳', iconClass:'teal',  value: '¥18K', label:'Fees Paid', change:'Fully cleared', up:true },
+      { icon:'✅', iconClass:'green', value: '97%',  label:'Best Score', change:'CS301 — A+', up:true },
+    ];
+  }
+
+  document.getElementById('dashStats').innerHTML = stats.map(s => `
+    <div class="stat-card">
+      <div class="stat-icon ${s.iconClass}">${s.icon}</div>
+      <div class="stat-info">
+        <div class="stat-value">${s.value}</div>
+        <div class="stat-label">${s.label}</div>
+        ${s.change ? `<div class="stat-change ${s.up ? 'up' : 'down'}">${s.change}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  // Bar chart
+  const depts = {};
+  DB.students.forEach(s => { depts[s.dept] = (depts[s.dept] || 0) + 1; });
+  const maxV = Math.max(...Object.values(depts));
+  const colors = ['#1a2a4a','#c8a96e','#2e7d8a','#3d9aaa','#64748b','#94a3b8'];
+  document.getElementById('deptChart').innerHTML = Object.entries(depts).map(([dept, count], i) => `
+    <div class="bar-wrap">
+      <div class="bar-val">${count}</div>
+      <div class="bar" style="height:${(count/maxV)*110}px;background:${colors[i % colors.length]}"></div>
+      <div class="bar-label">${dept.split(' ')[0]}</div>
+    </div>
+  `).join('');
+
+  // At risk
+  const riskStudents = DB.students.filter(s => s.gpa < 2.5);
+  document.getElementById('atRiskList').innerHTML = riskStudents.length ? riskStudents.map(s => `
+    <div class="risk-item">
+      <div class="risk-avatar">${s.fname[0]}${s.lname[0]}</div>
+      <div>
+        <div class="risk-name">${s.fname} ${s.lname} — ${s.id}</div>
+        <div class="risk-detail">${s.dept} · GPA: <strong style="color:var(--danger)">${s.gpa}</strong></div>
+        <div class="progress" style="margin-top:.4rem;width:180px">
+          <div class="progress-bar" style="width:${(s.gpa/4)*100}%;background:var(--danger)"></div>
+        </div>
+      </div>
+      <span class="badge badge-danger" style="margin-left:auto">At Risk</span>
+    </div>
+  `).join('') : '<div class="empty-state"><div class="empty-icon">✅</div><p>No students at risk</p></div>';
+
+  // Recent audit
+  document.getElementById('recentAudit').innerHTML = DB.audit.slice(0,5).map(a => `
+    <div class="audit-row">
+      <div class="audit-dot" style="background:${a.action==='LOGIN'?'var(--success)':a.action==='CREATE'?'var(--info)':a.action==='UPDATE'?'var(--warning)':'var(--danger)'}"></div>
+      <div>
+        <div class="audit-action">${a.action} — ${a.module}</div>
+        <div class="audit-detail">${a.user} · ${a.desc}</div>
+      </div>
+      <div class="audit-time" style="margin-left:auto">${a.time.split(' ')[1]}</div>
+    </div>
+  `).join('');
+}
+
+/* ─── STUDENTS ─── */
+function renderStudents() {
+  document.getElementById('studentCount').textContent = DB.students.length + ' students';
+  const isReadOnly = ['finance','student'].includes(currentUser.role);
+  document.getElementById('studentsTbody').innerHTML = DB.students.map((s,i) => `
+    <tr>
+      <td><strong>${s.id}</strong></td>
+      <td>${s.fname} ${s.lname}</td>
+      <td>${s.dept}</td>
+      <td>${s.prog}</td>
+      <td>${s.year}</td>
+      <td>
+        <span style="font-weight:700;color:${s.gpa >= 3.5 ? 'var(--success)' : s.gpa < 2.5 ? 'var(--danger)' : 'var(--navy)'}">${s.gpa}</span>
+        <div class="progress" style="width:60px;margin-top:3px"><div class="progress-bar ${s.gpa>=3.5?'green':s.gpa<2.5?'':'gold'}" style="width:${(s.gpa/4)*100}%;background:${s.gpa>=3.5?'var(--success)':s.gpa<2.5?'var(--danger)':'var(--gold)'}"></div></div>
+      </td>
+      <td><span class="badge ${s.status==='Active'?'badge-success':'badge-danger'}">${s.status}</span></td>
+      <td>
+        ${!isReadOnly ? `
+        <button class="btn btn-outline btn-sm" onclick="showToast('Edit feature in Java backend','info')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteStudent(${i})">🗑</button>
+        ` : '<span class="badge badge-navy">View Only</span>'}
+      </td>
+    </tr>
+  `).join('');
+}
+
+function deleteStudent(i) {
+  if (!confirm('Delete this student record?')) return;
+  logAudit('DELETE', 'Students', `Deleted student ${DB.students[i].id}`);
+  DB.students.splice(i, 1);
+  renderStudents();
+  showToast('Student record deleted', 'success');
+}
+
+function addStudent() {
+  const fname = document.getElementById('s_fname').value.trim();
+  const lname = document.getElementById('s_lname').value.trim();
+  const id    = document.getElementById('s_id').value.trim();
+  if (!fname || !lname || !id) { showToast('Please fill required fields', 'error'); return; }
+
+  // Check duplicate
+  if (DB.students.find(s => s.id === id)) {
+    showToast('Student ID already exists!', 'error'); return;
+  }
+
+  DB.students.push({
+    id, fname, lname,
+    dept:   document.getElementById('s_dept').value,
+    prog:   document.getElementById('s_prog').value || 'Undeclared',
+    year:   document.getElementById('s_year').value,
+    gpa:    0.0,
+    email:  document.getElementById('s_email').value,
+    phone:  document.getElementById('s_phone').value,
+    gender: document.getElementById('s_gender').value,
+    status: 'Active',
+    dob:    document.getElementById('s_dob').value,
+  });
+
+  logAudit('CREATE', 'Students', `Added student ${id} ${fname} ${lname}`);
+  closeModal('modalStudent');
+  renderStudents();
+  showToast(`Student ${fname} ${lname} added successfully!`, 'success');
+  // Reset
+  ['s_fname','s_lname','s_id','s_prog','s_email','s_phone'].forEach(id => document.getElementById(id).value = '');
+}
+
+/* ─── COURSES ─── */
+function renderCourses() {
+  document.getElementById('courseCount').textContent = DB.courses.length + ' courses';
+  const canEdit = ['admin','registrar'].includes(currentUser.role);
+  document.getElementById('coursesTbody').innerHTML = DB.courses.map((c,i) => `
+    <tr>
+      <td><strong style="color:var(--navy)">${c.code}</strong></td>
+      <td>${c.name}</td>
+      <td>${c.dept}</td>
+      <td><span class="badge badge-navy">${c.credits} cr</span></td>
+      <td>${c.instructor}</td>
+      <td>
+        <span style="font-weight:600">${c.enrolled}</span><span style="color:var(--gray-400)">/${c.max}</span>
+        <div class="progress" style="margin-top:3px">
+          <div class="progress-bar ${c.enrolled===c.max?'':'navy'}" style="width:${(c.enrolled/c.max)*100}%;background:${c.enrolled===c.max?'var(--danger)':'var(--navy)'}"></div>
+        </div>
+      </td>
+      <td><span class="badge ${c.status==='Full'?'badge-danger':c.status==='Active'?'badge-success':'badge-warning'}">${c.status}</span></td>
+      <td>
+        ${canEdit ? `<button class="btn btn-outline btn-sm" onclick="showToast('Edit in Java backend','info')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCourse(${i})">🗑</button>` : '<span class="badge badge-navy">View Only</span>'}
+      </td>
+    </tr>
+  `).join('');
+}
+
+function deleteCourse(i) {
+  if (!confirm('Delete this course?')) return;
+  logAudit('DELETE', 'Courses', `Deleted course ${DB.courses[i].code}`);
+  DB.courses.splice(i, 1);
+  renderCourses();
+  showToast('Course deleted', 'success');
+}
+
+function addCourse() {
+  const code = document.getElementById('c_code').value.trim();
+  const name = document.getElementById('c_name').value.trim();
+  if (!code || !name) { showToast('Please fill required fields', 'error'); return; }
+  if (DB.courses.find(c => c.code === code)) { showToast('Course code already exists!', 'error'); return; }
+
+  DB.courses.push({
+    code, name,
+    dept: document.getElementById('c_dept').value,
+    credits: parseInt(document.getElementById('c_credits').value) || 3,
+    instructor: document.getElementById('c_instructor').value,
+    enrolled: 0,
+    max: parseInt(document.getElementById('c_max').value) || 50,
+    semester: document.getElementById('c_sem').value,
+    status: 'Active'
+  });
+  logAudit('CREATE', 'Courses', `Added course ${code} ${name}`);
+  closeModal('modalCourse');
+  renderCourses();
+  showToast(`Course ${code} added!`, 'success');
+}
+
+/* ─── ENROLLMENT ─── */
+function renderEnrollment() {
+  document.getElementById('enrollCount').textContent = DB.enrollments.length + ' enrollments';
+  const canEdit = ['admin','registrar'].includes(currentUser.role);
+  document.getElementById('enrollTbody').innerHTML = DB.enrollments.map((e,i) => `
+    <tr>
+      <td><strong>${e.id}</strong></td>
+      <td>${e.studentName}<br><small style="color:var(--gray-400)">${e.student}</small></td>
+      <td>${e.courseName}<br><small style="color:var(--gray-400)">${e.course}</small></td>
+      <td>${e.semester}</td>
+      <td>${e.date}</td>
+      <td><span class="badge ${e.status==='Active'?'badge-success':'badge-warning'}">${e.status}</span></td>
+      <td>
+        ${canEdit ? `<button class="btn btn-danger btn-sm" onclick="deleteEnroll(${i})">🗑 Drop</button>` : '<span class="badge badge-navy">View Only</span>'}
+      </td>
+    </tr>
+  `).join('');
+}
+
+function deleteEnroll(i) {
+  if (!confirm('Drop this enrollment?')) return;
+  logAudit('DELETE', 'Enrollment', `Dropped enrollment ${DB.enrollments[i].id}`);
+  DB.enrollments.splice(i, 1);
+  renderEnrollment();
+  showToast('Enrollment dropped', 'success');
+}
+
+function addEnrollment() {
+  const studentSel = document.getElementById('e_student');
+  const courseSel  = document.getElementById('e_course');
+  if (!studentSel.value || !courseSel.value) {
+    showToast('Please select student and course', 'error'); return;
+  }
+  // Duplicate check
+  const dup = DB.enrollments.find(e => e.student === studentSel.value && e.course === courseSel.value);
+  if (dup) { showToast('Student already enrolled in this course!', 'error'); return; }
+
+  const sName = studentSel.options[studentSel.selectedIndex].text;
+  const cName = courseSel.options[courseSel.selectedIndex].text;
+  const newId = 'ENR' + String(DB.enrollments.length + 1).padStart(3,'0');
+
+  DB.enrollments.push({
+    id: newId,
+    student: studentSel.value,
+    studentName: sName,
+    course: courseSel.value,
+    courseName: cName,
+    semester: document.getElementById('e_sem').value,
+    date: document.getElementById('e_date').value || new Date().toISOString().slice(0,10),
+    status: 'Active'
+  });
+  logAudit('CREATE', 'Enrollment', `Enrolled ${sName} in ${cName}`);
+  closeModal('modalEnroll');
+  renderEnrollment();
+  showToast(`Enrollment confirmed!`, 'success');
+}
+
+/* ─── GRADES ─── */
+function computeGrade(score) {
+  score = parseInt(score);
+  let letter = '', pts = 0;
+  if      (score >= 95) { letter = 'A+'; pts = 4.0; }
+  else if (score >= 90) { letter = 'A';  pts = 4.0; }
+  else if (score >= 85) { letter = 'B+'; pts = 3.5; }
+  else if (score >= 80) { letter = 'B';  pts = 3.0; }
+  else if (score >= 75) { letter = 'B-'; pts = 2.7; }
+  else if (score >= 70) { letter = 'C+'; pts = 2.3; }
+  else if (score >= 65) { letter = 'C';  pts = 2.0; }
+  else if (score >= 60) { letter = 'C-'; pts = 1.7; }
+  else if (score >= 55) { letter = 'D';  pts = 1.0; }
+  else                  { letter = 'F';  pts = 0.0; }
+  document.getElementById('g_letter').value = letter;
+  document.getElementById('g_points').value = pts.toFixed(1);
+}
+
+function renderGrades() {
+  document.getElementById('gradeCount').textContent = DB.grades.length + ' records';
+  const canEdit = ['admin','lecturer'].includes(currentUser.role);
+  const data = currentUser.role === 'student'
+    ? DB.grades.filter(g => g.studentId === 'STU2024004')
+    : DB.grades;
+
+  document.getElementById('gradesTbody').innerHTML = data.map((g,i) => `
+    <tr>
+      <td>${g.studentId}</td>
+      <td>${g.studentName}</td>
+      <td>${g.courseName}<br><small style="color:var(--gray-400)">${g.course}</small></td>
+      <td><strong>${g.score}</strong>/100</td>
+      <td>
+        <span class="badge ${g.score>=90?'badge-success':g.score>=70?'badge-info':g.score>=60?'badge-warning':'badge-danger'}">${g.letter}</span>
+      </td>
+      <td>${g.points}</td>
+      <td>${g.semester}</td>
+      <td>${canEdit ? `<button class="btn btn-outline btn-sm" onclick="showToast('Edit grade in Java backend','info')">✏️</button>` : '—'}</td>
+    </tr>
+  `).join('');
+
+  // GPA distribution bars
+  const gpaBands = [
+    {label:'3.5–4.0',count:DB.students.filter(s=>s.gpa>=3.5).length,color:'var(--success)'},
+    {label:'3.0–3.5',count:DB.students.filter(s=>s.gpa>=3&&s.gpa<3.5).length,color:'var(--navy)'},
+    {label:'2.5–3.0',count:DB.students.filter(s=>s.gpa>=2.5&&s.gpa<3).length,color:'var(--gold)'},
+    {label:'<2.5',   count:DB.students.filter(s=>s.gpa<2.5).length,           color:'var(--danger)'},
+  ];
+  document.getElementById('gpaDistribution').innerHTML = gpaBands.map(b => `
+    <div class="gpa-bar-wrap">
+      <div class="gpa-header"><span class="gpa-name">${b.label}</span><span class="gpa-val">${b.count} students</span></div>
+      <div class="progress"><div class="progress-bar" style="width:${(b.count/DB.students.length)*100}%;background:${b.color}"></div></div>
+    </div>
+  `).join('');
+
+  // Pass rate
+  const courses = {};
+  DB.grades.forEach(g => {
+    if (!courses[g.course]) courses[g.course] = {pass:0,total:0,name:g.courseName};
+    courses[g.course].total++;
+    if (g.score >= 60) courses[g.course].pass++;
+  });
+  document.getElementById('passRateChart').innerHTML = Object.values(courses).map(c => {
+    const rate = Math.round((c.pass/c.total)*100);
+    return `
+      <div class="gpa-bar-wrap">
+        <div class="gpa-header"><span class="gpa-name">${c.name}</span><span class="gpa-val">${rate}%</span></div>
+        <div class="progress"><div class="progress-bar" style="width:${rate}%;background:${rate>=80?'var(--success)':rate>=60?'var(--gold)':'var(--danger)'}"></div></div>
+      </div>
+    `;
+  }).join('');
+}
+
+function addGrade() {
+  const studentSel = document.getElementById('g_student');
+  const courseSel  = document.getElementById('g_course');
+  const score      = parseInt(document.getElementById('g_score').value);
+  if (!studentSel.value || !courseSel.value || isNaN(score)) {
+    showToast('Please fill all required fields', 'error'); return;
+  }
+  const letter = document.getElementById('g_letter').value;
+  const points = parseFloat(document.getElementById('g_points').value);
+  const sName  = studentSel.options[studentSel.selectedIndex].text;
+  const cName  = courseSel.options[courseSel.selectedIndex].text;
+
+  // Duplicate check
+  const dup = DB.grades.find(g => g.studentId === studentSel.value && g.course === courseSel.value);
+  if (dup) { showToast('Grade already exists for this student/course!', 'error'); return; }
+
+  DB.grades.push({
+    studentId: studentSel.value, studentName: sName,
+    course: courseSel.value, courseName: cName,
+    score, letter, points,
+    semester: document.getElementById('g_sem').value
+  });
+  logAudit('CREATE', 'Grades', `Entered grade ${letter} for ${sName} in ${cName}`);
+  closeModal('modalGrade');
+  renderGrades();
+  showToast(`Grade ${letter} saved for ${sName}!`, 'success');
+}
+
+/* ─── FEES ─── */
+function renderFees() {
+  document.getElementById('feeCount').textContent = DB.fees.length + ' records';
+  const totalAmt   = DB.fees.reduce((s,f) => s + f.total, 0);
+  const totalPaid  = DB.fees.reduce((s,f) => s + f.paid, 0);
+  const outstanding = totalAmt - totalPaid;
+  const canEdit = ['admin','finance'].includes(currentUser.role);
+
+  document.getElementById('feeStats').innerHTML = `
+    <div class="stat-card"><div class="stat-icon gold">💰</div><div class="stat-info"><div class="stat-value">¥${(totalAmt/1000).toFixed(0)}K</div><div class="stat-label">Total Fees Billed</div></div></div>
+    <div class="stat-card"><div class="stat-icon green">✅</div><div class="stat-info"><div class="stat-value">¥${(totalPaid/1000).toFixed(0)}K</div><div class="stat-label">Amount Collected</div></div></div>
+    <div class="stat-card"><div class="stat-icon red">⚠️</div><div class="stat-info"><div class="stat-value">¥${(outstanding/1000).toFixed(0)}K</div><div class="stat-label">Outstanding Balance</div></div></div>
+    <div class="stat-card"><div class="stat-icon navy">📊</div><div class="stat-info"><div class="stat-value">${Math.round((totalPaid/totalAmt)*100)}%</div><div class="stat-label">Collection Rate</div></div></div>
+  `;
+
+  const fees = currentUser.role === 'student'
+    ? DB.fees.filter(f => f.student === 'STU2024004')
+    : DB.fees;
+
+  document.getElementById('feesTbody').innerHTML = fees.map((f,i) => {
+    const balance = f.total - f.paid;
+    const status  = balance === 0 ? 'Paid' : f.paid === 0 ? 'Unpaid' : 'Partial';
+    return `<tr>
+      <td><strong>${f.receipt}</strong></td>
+      <td>${f.studentName}<br><small style="color:var(--gray-400)">${f.student}</small></td>
+      <td>${f.type}</td>
+      <td style="text-align:right">¥${f.total.toLocaleString()}</td>
+      <td style="text-align:right;color:var(--success)">¥${f.paid.toLocaleString()}</td>
+      <td style="text-align:right;color:${balance>0?'var(--danger)':'var(--gray-400)'}">¥${balance.toLocaleString()}</td>
+      <td><span class="badge ${status==='Paid'?'badge-success':status==='Unpaid'?'badge-danger':'badge-warning'}">${status}</span></td>
+      <td>${f.date}</td>
+      <td>${canEdit ? `<button class="btn btn-success btn-sm" onclick="showToast('Payment recorded!','success')">💳 Pay</button>` : '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function addFee() {
+  const studentSel = document.getElementById('f_student');
+  const total = parseFloat(document.getElementById('f_total').value);
+  const paid  = parseFloat(document.getElementById('f_paid').value);
+  if (!studentSel.value || isNaN(total) || isNaN(paid)) {
+    showToast('Please fill required fields', 'error'); return;
+  }
+  if (paid > total) { showToast('Paid amount cannot exceed total', 'error'); return; }
+
+  const sName = studentSel.options[studentSel.selectedIndex].text;
+  const receipt = 'RCP' + String(DB.fees.length + 1).padStart(3,'0');
+  DB.fees.push({
+    receipt,
+    student: studentSel.value, studentName: sName,
+    type: document.getElementById('f_type').value,
+    semester: document.getElementById('f_sem').value,
+    total, paid,
+    date: new Date().toISOString().slice(0,10),
+    method: document.getElementById('f_method').value
+  });
+  logAudit('CREATE', 'Fees', `Recorded payment ¥${paid} for ${sName}`);
+  closeModal('modalFee');
+  renderFees();
+  showToast(`Payment recorded! Receipt ${receipt}`, 'success');
+}
+
+/* ─── USERS ─── */
+function renderUsers() {
+  document.getElementById('userCount').textContent = DB.users.length + ' users';
+  const roleColors = { admin:'badge-danger', registrar:'badge-gold', lecturer:'badge-info', finance:'badge-warning', student:'badge-success' };
+  document.getElementById('usersTbody').innerHTML = DB.users.map((u,i) => `
+    <tr>
+      <td><strong>${u.id}</strong></td>
+      <td>${u.username}</td>
+      <td>${u.fname} ${u.lname}</td>
+      <td>${u.email}</td>
+      <td><span class="badge ${roleColors[u.role]||'badge-navy'}">${u.role.charAt(0).toUpperCase()+u.role.slice(1)}</span></td>
+      <td><span class="badge ${u.status==='active'?'badge-success':'badge-danger'}">${u.status}</span></td>
+      <td style="font-size:.75rem;color:var(--gray-600)">${u.lastLogin}</td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="showToast('Edit in Java backend','info')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteUser(${i})">🗑</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function deleteUser(i) {
+  if (DB.users[i].id === 'USR001') { showToast('Cannot delete system admin!', 'error'); return; }
+  if (!confirm('Delete this user?')) return;
+  logAudit('DELETE', 'Users', `Deleted user ${DB.users[i].username}`);
+  DB.users.splice(i, 1);
+  renderUsers();
+  showToast('User deleted', 'success');
+}
+
+function addUser() {
+  const fname = document.getElementById('u_fname').value.trim();
+  const uname = document.getElementById('u_uname').value.trim();
+  const email = document.getElementById('u_email').value.trim();
+  if (!fname || !uname || !email) { showToast('Please fill required fields', 'error'); return; }
+  if (DB.users.find(u => u.username === uname)) { showToast('Username already exists!', 'error'); return; }
+
+  const lname = document.getElementById('u_lname').value.trim();
+  const uid = 'USR' + String(DB.users.length + 1).padStart(3,'0');
+  DB.users.push({
+    id: uid, username: uname, fname, lname, email,
+    role: document.getElementById('u_role').value,
+    status: document.getElementById('u_status').value,
+    lastLogin: 'Never'
+  });
+  logAudit('CREATE', 'Users', `Created user ${uname} with role ${document.getElementById('u_role').value}`);
+  closeModal('modalUser');
+  renderUsers();
+  showToast(`User ${uname} created!`, 'success');
+}
+
+/* ─── AUDIT ─── */
+function renderAudit() {
+  document.getElementById('auditCount').textContent = DB.audit.length + ' entries';
+  const actionColors = { LOGIN:'var(--success)', LOGOUT:'var(--teal)', CREATE:'var(--info)', UPDATE:'var(--warning)', DELETE:'var(--danger)' };
+  document.getElementById('auditTbody').innerHTML = DB.audit.map(a => `
+    <tr>
+      <td>${a.id}</td>
+      <td style="font-size:.75rem;white-space:nowrap">${a.time}</td>
+      <td><strong>${a.user}</strong></td>
+      <td><span class="badge badge-navy">${a.role}</span></td>
+      <td><span class="badge" style="background:${actionColors[a.action]+'22'};color:${actionColors[a.action]};border:1px solid ${actionColors[a.action]+'44'}">${a.action}</span></td>
+      <td>${a.module}</td>
+      <td style="font-size:.78rem">${a.desc}</td>
+      <td style="font-size:.75rem;color:var(--gray-400)">${a.ip}</td>
+    </tr>
+  `).join('');
+}
+
+function logAudit(action, module, desc) {
+  DB.audit.unshift({
+    id: DB.audit.length + 1,
+    time: new Date().toISOString().replace('T',' ').slice(0,16),
+    user: currentUser ? currentUser.id : 'system',
+    role: currentUser ? currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1) : 'System',
+    action, module, desc,
+    ip: '127.0.0.1'
+  });
+}
+
+/* ─── PROFILE ─── */
+function renderProfile() {
+  const u = currentUser;
+  const roleLabel = { admin:'Administrator', registrar:'Registrar', lecturer:'Lecturer', finance:'Finance Officer', student:'Student' };
+  document.getElementById('profileBody').innerHTML = `
+    <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--gray-100)">
+      <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;color:var(--white)">
+        ${u.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+      </div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:700;color:var(--navy)">${u.name}</div>
+        <div><span class="badge badge-gold">${roleLabel[u.role]||u.role}</span></div>
+        <div style="font-size:.78rem;color:var(--gray-600);margin-top:.3rem">ID: ${u.id}</div>
+      </div>
+    </div>
+    <table style="width:100%;font-size:.84rem">
+      <tr><td style="padding:.5rem 0;color:var(--gray-600);width:40%">Username</td><td><strong>${u.id}</strong></td></tr>
+      <tr><td style="padding:.5rem 0;color:var(--gray-600)">Full Name</td><td>${u.name}</td></tr>
+      <tr><td style="padding:.5rem 0;color:var(--gray-600)">Role</td><td>${roleLabel[u.role]}</td></tr>
+      <tr><td style="padding:.5rem 0;color:var(--gray-600)">Institution</td><td>Jinling Institute of Technology</td></tr>
+      <tr><td style="padding:.5rem 0;color:var(--gray-600)">System</td><td>USAMIS v1.0</td></tr>
+      <tr><td style="padding:.5rem 0;color:var(--gray-600)">Session</td><td>Active — ${new Date().toLocaleTimeString()}</td></tr>
+    </table>
+  `;
+}
+
+/* ─── HELPERS ─── */
+function populateDropdowns() {
+  const studentOpts = DB.students.map(s => `<option value="${s.id}">${s.fname} ${s.lname}</option>`).join('');
+  const courseOpts  = DB.courses.map(c => `<option value="${c.code}">${c.name}</option>`).join('');
+
+  ['e_student','g_student','f_student'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '<option value="">— Select Student —</option>' + studentOpts;
+  });
+  ['e_course','g_course'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '<option value="">— Select Course —</option>' + courseOpts;
+  });
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  populateDropdowns();
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+function filterTable(input, tableId) {
+  const q = input.value.toLowerCase();
+  document.querySelectorAll('#' + tableId + ' tbody tr').forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+function showToast(msg, type = 'info') {
+  const icons = { success:'✅', error:'❌', info:'ℹ️', warning:'⚠️' };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `${icons[type]||'🔔'} ${msg}`;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(() => el.remove(), 3100);
+}
+</script>
+</body>
+</html>
